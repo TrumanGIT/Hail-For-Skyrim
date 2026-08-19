@@ -38,9 +38,10 @@ namespace EventSinks {
 
          //player transitioned from outside to inside, stop hail, play sfx
         if (!globals::lastCellWasInterior && globals::currentCellIsInterior) {
-             logger::info("player transitioned from outside to inside, stop hail, play sfx");
+         
        
             if (globals::isHailing.load()) {
+                logger::info("player transitioned from outside to inside, stop hail, play sfx");
                  // play sfx
                  StartIndoorHail(player);
 

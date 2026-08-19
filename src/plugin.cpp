@@ -25,12 +25,13 @@ static void MessageHandler(SKSE::MessagingInterface::Message* msg) {
         break;
     } case SKSE::MessagingInterface::kDataLoaded:
     {
-        break;
-    }
-    default:
         IniParser();
         HailData::Initialize();
         EventSinks::PlayerCellEvent::RegisterEventSink();
+        break;
+    }
+    default:
+
         break;
     }
 }

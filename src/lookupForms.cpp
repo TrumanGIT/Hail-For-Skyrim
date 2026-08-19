@@ -4,36 +4,14 @@
 #include "global.h"
 
 namespace HailData {
-    RE::SpellItem* hailSpell = nullptr;
-    RE::SpellItem* hailSpellSM = nullptr;
-
-    RE::EffectSetting* hailMagicEffect = nullptr;
-    RE::EffectSetting* hailMagicEffectSM = nullptr;
-
-    RE::BGSProjectile* smallHailP = nullptr;
-    RE::BGSProjectile* largeHailP = nullptr;
-
-    RE::TESGlobal* hailGlobal = nullptr;
-
-    RE::TESQuest* hailQuest = nullptr;
-
-    RE::TESForm* activatorObject = nullptr;
-
-    RE::TESTopic* hailTopic = nullptr;
-
-    RE::TESFaction* currentFollowerFaction = nullptr;
-
-    RE::TESFaction* winNeverFillAliasesFaction = nullptr;
-    RE::TESFaction* dragonPriestFaction = nullptr;
-  
-    RE::TESFaction* creatureFaction = nullptr;
-    RE::TESFaction* preyFaction = nullptr;
-    RE::TESFaction* farmAnimalsFaction = nullptr;
-
-    std::vector<RE::TESFaction*> factions;
 
     void LoadForms() {
         auto dataHandler = RE::TESDataHandler::GetSingleton();
+
+        if (!dataHandler) {
+            logger::error("no data handler cant lookup forms"); 
+            return; 
+        }
 
         hailSpell = dataHandler->LookupForm<RE::SpellItem>(0x80A, "Hail.esp");
         hailSpellSM = dataHandler->LookupForm<RE::SpellItem>(0xD74, "Hail.esp");
@@ -58,12 +36,21 @@ namespace HailData {
         preyFaction = dataHandler->LookupForm<RE::TESFaction>(0x0002E894, "Skyrim.esm");
         farmAnimalsFaction = dataHandler->LookupForm<RE::TESFaction>(0x0004E849, "Skyrim.esm");
 
+        hailInteriorSoundLP = dataHandler->LookupForm<RE::BGSSoundDescriptorForm>(0x42D, "Hail.esp");
+
+        if (!hailInteriorSoundLP)
+        {
+
+            logger::error("no sound form loaded");
+        }
+
+
         factions = {dragonPriestFaction, creatureFaction, preyFaction, farmAnimalsFaction, currentFollowerFaction};
     }
 
     bool ValidateForms() {
         return hailSpell && hailSpellSM && hailMagicEffect && hailMagicEffectSM && smallHailP && largeHailP &&
-               hailGlobal && activatorObject && dragonPriestFaction && hailTopic && currentFollowerFaction;
+               hailGlobal && activatorObject && dragonPriestFaction && hailTopic && currentFollowerFaction && hailInteriorSoundLP;
     }
 
     void ApplySpellMagnitude(RE::SpellItem* spell, RE::EffectSetting* effectSetting) {

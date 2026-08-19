@@ -1,45 +1,44 @@
 #pragma once
 
 namespace HailData {
-    extern RE::SpellItem* hailSpell;
-    extern RE::SpellItem* hailSpellSM;
+    inline RE::SpellItem* hailSpell = nullptr;
+    inline RE::SpellItem* hailSpellSM = nullptr;
 
-    extern RE::EffectSetting* hailMagicEffect;
-    extern RE::EffectSetting* hailMagicEffectSM;
+    inline RE::EffectSetting* hailMagicEffect = nullptr;
+    inline RE::EffectSetting* hailMagicEffectSM = nullptr;
 
-    extern RE::BGSProjectile* smallHailP;
-    extern RE::BGSProjectile* largeHailP;
+    inline RE::BGSProjectile* smallHailP = nullptr;
+    inline RE::BGSProjectile* largeHailP = nullptr;
 
-    extern RE::TESGlobal* hailGlobal;
+    inline RE::TESGlobal* hailGlobal = nullptr;
 
-    extern RE::TESForm* activatorObject;
+    inline RE::TESForm* activatorObject = nullptr;
 
-    /* extern RE::FormID tamrielFormID;
-    extern RE::FormID solitudeWorld;
-    extern RE::FormID markarthWorld;
-    extern RE::FormID whiterunWorld;
-    extern RE::FormID riftenWorld; */
+    inline std::vector<RE::FormID> appropriateWorldSpaces;
 
-    extern std::vector<RE::FormID> appropriateWorldSpaces;
+    inline RE::TESQuest* hailQuest = nullptr;
 
-    extern RE::TESQuest* hailQuest;
+    inline RE::TESTopic* hailTopic = nullptr;
 
-    // extern RE::BGSListForm* HailGoHomeIgnoreFormList;
-    extern RE::TESTopic* hailTopic;
+    inline RE::BGSKeyword* executionerKeyword = nullptr;
 
-    extern RE::BGSKeyword* executionerKeyword;
+    inline RE::TESObjectARMO* prisonerTunic = nullptr;
 
-    extern RE::TESObjectARMO* prisonerTunic;
+    inline RE::TESFaction* currentFollowerFaction = nullptr;
 
-    extern RE::TESFaction* currentFollowerFaction;
+    inline RE::TESFaction* dragonPriestFaction = nullptr;
 
-    extern RE::TESFaction* dragonPriestFaction;
+    inline RE::TESFaction* creatureFaction = nullptr;
+    inline RE::TESFaction* preyFaction = nullptr;
+    inline RE::TESFaction* farmAnimalsFaction = nullptr;
 
-    extern RE::TESFaction* creatureFaction;
-    extern RE::TESFaction* preyFaction;
-    extern RE::TESFaction* farmAnimalsFaction;
+    inline RE::BGSSoundDescriptorForm* hailInteriorSoundLP = nullptr;
 
-    extern std::vector<RE::TESFaction*> factions;
+    inline RE::TESFaction* winNeverFillAliasesFaction = nullptr;
+
+    inline std::vector<RE::TESFaction*> factions;
 
     void Initialize();
 }
+
+

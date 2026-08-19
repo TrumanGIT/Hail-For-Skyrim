@@ -274,13 +274,13 @@ void StartIndoorHail(RE::PlayerCharacter* player)
 {
     if (!player) return;
 
-    auto* sound = RE::TESForm::LookupByEditorID<RE::TESSound>("HailSoundInteriorLP");
-    if (!sound || !sound->descriptor) return;
+
+    if (!HailData::hailInteriorSoundLP || !HailData::hailInteriorSoundLP) return;
 
     auto* audioManager = RE::BSAudioManager::GetSingleton();
     if (!audioManager) return;
 
-    audioManager->GetSoundHandle(globals::indoorSound, sound->descriptor, 0x1A);
+    audioManager->GetSoundHandle(globals::indoorSound, HailData::hailInteriorSoundLP, 0x1A);
 
     globals::indoorSound.SetPosition(player->GetPosition());
 
@@ -290,12 +290,15 @@ void StartIndoorHail(RE::PlayerCharacter* player)
 
     globals::indoorSound.Play();
 
+    logger::info("playing hail sfx");
+
     globals::isHailSFXPlaying.store(true);
 }
 
 void StopIndoorHail() {
     if (globals::indoorSound.IsValid()) {
         globals::indoorSound.Stop();
+        logger::info("stopping hail sfx");
     }
 
     globals::isHailSFXPlaying.store(false); 
