@@ -17,17 +17,29 @@ void Hail() {
     logger::info("Hail starting");
 
     auto player = RE::PlayerCharacter::GetSingleton();
-    if (!player) return;
+    if (!player) {
+        globals::isHailing.store(false);
+        return;
+    }
 
     auto activatorBaseObject =
         HailData::activatorObject->As<RE::TESBoundObject>();  // this invisible activator casts hail spells
 
     if (!activatorBaseObject) {
+        globals::isHailing.store(false);
         logger::error("Failed to cast ActivatorObject to TESBoundObject");
         return;
     }
 
-    RE::ObjectRefHandle placedActivator = CreateActivator(player, activatorBaseObject)->GetHandle();
+  auto activator = CreateActivator(player, activatorBaseObject);
+
+  if (!activator) {
+      logger::error("Failed to create hail activator");
+      globals::isHailing.store(false);
+      return;
+  }
+
+   RE::ObjectRefHandle placedActivator = activator->GetHandle();
 
     int intensity = RandomFromThree(5, 7, 9);  // hail spells cast /ms
 
@@ -66,6 +78,7 @@ void Hail() {
 
                 if (!placedActivator) {
                     logger::warn("placed activator is null or doesent exist");
+                    globals::isHailing.store(false);
                     return;
                 }
 
@@ -129,6 +142,8 @@ void Hail() {
 
         std::this_thread::sleep_for(std::chrono::milliseconds(intensity));
     }
+
+    globals::isHailing.store(false);
 
         hailLineSpokenCount = 0;
 

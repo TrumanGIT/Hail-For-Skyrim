@@ -54,13 +54,14 @@ namespace EventSinks {
             //meaning player went inside while it was hailing, lets start hail again 
             if (globals::isHailSFXPlaying.load()){
                 StopIndoorHail(); 
-                // start hail again? 
             }
         }
 
          // player went from interior -> interior 
           if (globals::lastCellWasInterior && globals::currentCellIsInterior) {
-              StopIndoorHail();
+              if (globals::isHailSFXPlaying.load()) {
+                  StopIndoorHail();
+              }
          }
            
         // if not hailing, check to see if it should
