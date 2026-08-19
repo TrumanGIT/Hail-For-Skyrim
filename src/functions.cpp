@@ -330,7 +330,7 @@ void ShouldIndoorHail(RE::PlayerCharacter* player) {
 bool ShouldHail(RE::PlayerCharacter* player, RE::Sky* sky, bool isInteriorCell) {
     auto ui = RE::UI::GetSingleton();
 
-    if (!sky || !player || isInteriorCell || !isLightning() || sky->IsSnowing()) {
+    if (!sky || !player || isInteriorCell || !isLightning() || !sky->IsRaining()) {
         return false;
     }
 

@@ -49,29 +49,19 @@ namespace EventSinks {
         }
 
         //player transitioned to exterior, stop sfx and continue playing hail
-        else if (globals::lastCellWasInterior && !globals::currentCellIsInterior) {
+         if (!globals::currentCellIsInterior) {
 
             //meaning player went inside while it was hailing, lets start hail again 
             if (globals::isHailSFXPlaying.load()){
                 StopIndoorHail(); 
-
                 // start hail again? 
             }
         }
 
-        // player went from interior -> interior 
-        else if (globals::lastCellWasInterior && globals::currentCellIsInterior) {
-            globals::isHailSFXPlaying.store(false); 
-        }
-
-     /* if (currentWorldspace != globals::lastWorldspace) {
-            logger::info("worldspace changed -> resetting hail state");
-
-          //  globals::isHailing.store(false);
-            globals::isHailSFXPlaying.store(false);
-
-            globals::hailActivatorNeedsReset.store(true); 
-        }*/
+         // player went from interior -> interior 
+          if (globals::lastCellWasInterior && globals::currentCellIsInterior) {
+              StopIndoorHail();
+         }
            
         // if not hailing, check to see if it should
         if (!globals::isHailing.load()) {
